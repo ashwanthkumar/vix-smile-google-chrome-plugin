@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IV Smile Viz (powered by Sensibull Data)</title>
+  <script src="js/jquery.min.js"></script>
+  <script src="js/lodash.min.js"></script>
+  <script src="js/chart.umd.js"></script>
+  <!-- This file is managed via tailwind, checkout README for instructions on creating it -->
+  <link href="./ivsmile.css" rel="stylesheet">
+</head>
+
+<body>
+  <div class="p-5">
+    <h1 class="text-3xl text-center">NSE/BSE IV Smile</h1>
+  </div>
+
+  <div class="flex flex-row">
+    <div class="max-w-sm mx-auto">
+      <!-- Instruments -->
+      <label for="instruments" class="block mb-2 text-sm font-medium text-gray-900">Instruments</label>
+      <select id="instruments"
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        name="instruments"></select>
+    </div>
+
+    <div class="max-w-sm mx-auto">
+      <!-- Expiries -->
+      <label for="expiries" class="block mb-2 text-sm font-medium text-gray-900">Expiry</label>
+      <select id="expiries"
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        name="expiries"></select>
+    </div>
+  </div>
+
+  <div class="flex justify-center p-5">
+    <div class="w-2/3 h-2/3 text-center">
+      <canvas id="smile"></canvas>
+    </div>
+  </div>
+</body>
+<script src="ivsmile.js"></script>
+
+</html>

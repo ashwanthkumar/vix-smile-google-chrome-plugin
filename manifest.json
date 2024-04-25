@@ -1,0 +1,22 @@
+{
+  "name": "IV Smile",
+  "version": "1.0",
+  "description": "Vizualize the IV Smile of various Instruments, powered by Sensibull Data",
+  "manifest_version": 3,
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": [
+    "activeTab",
+    "scripting"
+  ],
+  "host_permissions": [
+    "*://*.sensibull.com/"
+  ],
+  "content_security_policy": {
+    "extension_pages": "default-src 'self'; connect-src https://* http://* data: blob: filesystem:;"
+  },
+  "action": {
+    "default_title": "Click to view IV Smile"
+  }
+}
