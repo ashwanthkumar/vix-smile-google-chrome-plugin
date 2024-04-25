@@ -55,13 +55,6 @@ async function init() {
       });
       return prev;
     }, {});
-  // console.log(allTokensToInstruments);
-  _.sortBy(instrumentsList, 'tradingsymbol').forEach(i => {
-    $('#instruments').append($('<option>', {
-      value: i.instrument_token,
-      text: i.tradingsymbol,
-    }));
-  });
 
   $('#instruments').on('change', async function () {
     console.log("Instrument Changed")
@@ -135,6 +128,14 @@ async function init() {
     existingChart.update()
   });
 
+  // console.log(allTokensToInstruments);
+  _.sortBy(instrumentsList, 'tradingsymbol').forEach(i => {
+    $('#instruments').append($('<option>', {
+      value: i.instrument_token,
+      text: i.tradingsymbol,
+    }));
+  });
+  $("#instruments").val(instrumentsList[0].instrument_token).change();
 }
 
 init();
