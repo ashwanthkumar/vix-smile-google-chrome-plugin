@@ -44,8 +44,8 @@ async function init() {
 
   const nseUnderlying = _.values(instrument_metacache.underlyer_list.NSE["NSE"].EQ).filter((r) => !r.is_non_fno);
   const nseIndicesUnderlying = _.values(instrument_metacache.underlyer_list.NSE["NSE-INDICES"].EQ);
-  const bseIndicesUnderlying = _.values(instrument_metacache.underlyer_list.BSE["BSE-INDICES"].EQ);
-  const cdsIndicesUnderlying = _.values(instrument_metacache.underlyer_list.CDS["CDS-INDICES"].INDEX);
+  const bseIndicesUnderlying = (instrument_metacache.underlyer_list.BSE && _.values(instrument_metacache.underlyer_list.BSE["BSE-INDICES"].EQ)) || [];
+  const cdsIndicesUnderlying = (instrument_metacache.underlyer_list.CDS && _.values(instrument_metacache.underlyer_list.CDS["CDS-INDICES"].INDEX)) || [];
   const instrumentsList = _.union(nseIndicesUnderlying, bseIndicesUnderlying, cdsIndicesUnderlying, nseUnderlying);
 
   const allTokensToInstruments = _.union(nseIndicesUnderlying, bseIndicesUnderlying, cdsIndicesUnderlying, nseUnderlying)
@@ -99,6 +99,8 @@ async function init() {
 
     const expiry = this.value;
     const expiryData = data[expiry];
+    // console.log(expiryData);
+    const atmStrike = expiryData.atm_strike;
 
     const requiredOptions = _.sortBy(
       expiryData.options
@@ -119,11 +121,32 @@ async function init() {
         }
       ],
     };
+    const positionOfAtmStrikeOnX = _.findIndex(requiredOptions, (o) => o.label.indexOf(atmStrike) !== -1);
 
     existingChart.destroy();
     existingChart = new Chart(ctx, {
       type: 'line',
       data: chartData,
+      options: {
+        plugins: {
+          annotation: {
+            annotations: {
+              atm: {
+                type: 'line',
+                label: {
+                  display: true,
+                  content: 'ATM: ' + atmStrike,
+                  rotation: 90
+                },
+                xMin: positionOfAtmStrikeOnX,
+                xMax: positionOfAtmStrikeOnX,
+                borderColor: 'rgb(255, 99, 132)',
+                borderWidth: 2,
+              }
+            }
+          }
+        }
+      }
     });
     existingChart.update()
   });
